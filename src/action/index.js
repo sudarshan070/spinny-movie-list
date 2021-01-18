@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { BASE_URL } from '../utils/api';
-import { GET_MOVIES, SEARCH_Movies } from './types';
+import { GET_MORE_MOVIES, GET_MOVIES, SEARCH_Movies } from './types';
 
 
 export function getMovies() {
@@ -31,4 +31,18 @@ export function getSearchMovies(search) {
             console.log(error)
         }
     }
-} 
+}
+
+export function getMoreMovies(page) {
+    return async function (dispatch) {
+        try {
+            const getMoreMoviesData = await axios.get(`${BASE_URL}q=<query>&limit=16&page=${page}`)
+            await dispatch({
+                type: GET_MOVIES,
+                payload: getMoreMoviesData.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}

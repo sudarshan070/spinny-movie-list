@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getMovies, getSearchMovies } from "../action";
+import { getMoreMovies, getMovies, getSearchMovies } from "../action";
+import List from "./List";
 
-function Movies({ dispatch, movies }) {
+function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
+  // console.log(last_page, "movies concat");
   const [searchMovies, setSearchMovies] = useState("");
+  const [pageNum, setPageNum] = useState(1);
 
   useEffect(() => {
-    dispatch(getMovies());
-  }, [dispatch]);
+    dispatch(getMovies(page));
+  }, [dispatch, page]);
 
   const handleSearchMovies = (searchMovies) => {
     dispatch(getSearchMovies(searchMovies));
+  };
+
+  const handleClick = (page) => {
+    setPageNum(page + 1);
+    dispatch(getMoreMovies(page + 1));
   };
 
   return (
@@ -24,15 +32,28 @@ function Movies({ dispatch, movies }) {
         Go
       </button>
       <p>Movies List</p>
-      {movies.results
-        ? movies.results.map((movie) => <p>{movie.title}</p>)
-        : ""}
+      {!searchMovies && searchMovies.length === 0 ? (
+        <List movies={movies.results} />
+      ) : searchMoviesArr.results && searchMoviesArr.results.length > 0 ? (
+        <List movies={searchMoviesArr.results} />
+      ) : (
+        "no movies"
+      )}
+      <p onClick={pageNum < last_page ? () => handleClick(pageNum) : ""}>
+        {pageNum < last_page ? "Load more.." : ""}
+      </p>
     </div>
   );
 }
 
 function mapStateToProps(state) {
-  return { movies: state.movies };
+  console.log(state, "state");
+  return {
+    movies: state.movies.movies,
+    searchMoviesArr: state.movies.searchMoviesArr,
+    page: state.movies.page,
+    last_page: state.movies.movies.last_page,
+  };
 }
 
 export default connect(mapStateToProps)(Movies);
