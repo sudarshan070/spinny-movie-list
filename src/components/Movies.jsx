@@ -5,7 +5,6 @@ import { getMoreMovies, getMovies, getSearchMovies } from "../action";
 import List from "./List";
 
 function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
-  console.log(movies, "movies is here");
   const [searchMovies, setSearchMovies] = useState("");
   const [pageNum, setPageNum] = useState(1);
 
@@ -64,7 +63,6 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
 }
 
 function mapStateToProps(state) {
-  console.log(state, "state");
   return {
     movies: state.movies.movies,
     searchMoviesArr: state.movies.searchMoviesArr,

@@ -54,7 +54,6 @@ export function getMoreMovies(page) {
                 type: GET_MORE_MOVIES,
                 payload: getMoreMoviesData.data
             })
-            console.log(getMoreMoviesData.data, 'getMoreMoviesData');
         } catch (error) {
             dispatch(getFailure())
         }
