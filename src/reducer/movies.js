@@ -13,9 +13,10 @@ const getMoviesReducer = (state = initialState, action) => {
             return { ...state, movies: action.payload }
         case SEARCH_Movies:
             return { ...state, searchMoviesArr: action.payload }
-        // case GET_MOVIES:
-        //     const movies = state.movies.concat(action.payload)
-        //     return { ...state, movies, page: state.page }
+        case GET_MORE_MOVIES:
+            const prevResults = state.movies && state.movies.results;
+            // console.log(prevResults, 'prev', action.payload.results, [...prevResults, ...action.payload.results]);
+            return { ...state, movies: { ...state.movies, results: [...prevResults, ...action.payload.results] }, page: state.page }
         default:
             return state
     }

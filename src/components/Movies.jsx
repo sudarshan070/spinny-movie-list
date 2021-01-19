@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getMoreMovies, getMovies, getSearchMovies } from "../action";
 import List from "./List";
 
 function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
+  console.log(movies, "movies is here");
   const [searchMovies, setSearchMovies] = useState("");
   const [pageNum, setPageNum] = useState(1);
 
@@ -46,7 +48,9 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
           ) : searchMoviesArr.results && searchMoviesArr.results.length > 0 ? (
             <List movies={searchMoviesArr.results} />
           ) : (
-            "no movies"
+            <div className="loading">
+              <Spinner animation="grow" />
+            </div>
           )}
         </>
         <div className="text-center py-4 text-white load-more">

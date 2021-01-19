@@ -1,7 +1,20 @@
 import axios from 'axios'
 import { BASE_URL } from '../utils/api';
-import { GET_MORE_MOVIES, GET_MOVIES, SEARCH_Movies } from './types';
+import { GET_FAILURE, GET_MORE_MOVIES, GET_MOVIES, SEARCH_Movies, SET_LOADING } from './types';
 
+
+export function setLoading(loading) {
+    return {
+        type: SET_LOADING,
+        payload: loading
+    }
+}
+
+export function getFailure() {
+    return {
+        type: GET_FAILURE
+    }
+}
 
 export function getMovies() {
     return async function (dispatch) {
@@ -12,7 +25,7 @@ export function getMovies() {
                 payload: getMoviesData.data
             })
         } catch (error) {
-            console.log(error);
+            dispatch(getFailure())
         }
     }
 }
@@ -28,7 +41,7 @@ export function getSearchMovies(search) {
             })
 
         } catch (error) {
-            console.log(error)
+            dispatch(getFailure())
         }
     }
 }
@@ -38,11 +51,12 @@ export function getMoreMovies(page) {
         try {
             const getMoreMoviesData = await axios.get(`${BASE_URL}q=<query>&limit=16&page=${page}`)
             await dispatch({
-                type: GET_MOVIES,
+                type: GET_MORE_MOVIES,
                 payload: getMoreMoviesData.data
             })
+            console.log(getMoreMoviesData.data, 'getMoreMoviesData');
         } catch (error) {
-            console.log(error);
+            dispatch(getFailure())
         }
     }
 }
