@@ -1,0 +1,21 @@
+@media only screen and (max-width: 980px) {
+  .movie-card {
+    width: 30%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .m-movie-container {
+    display: flex;
+    justify-content: space-around !important;
+  }
+  .movie-card {
+    width: 45%;
+  }
+}
+
+@media only screen and (max-width: 440px) {
+  .movie-card {
+    width: 80%;
+  }
+}

@@ -4,7 +4,6 @@ import { getMoreMovies, getMovies, getSearchMovies } from "../action";
 import List from "./List";
 
 function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
-  // console.log(last_page, "movies concat");
   const [searchMovies, setSearchMovies] = useState("");
   const [pageNum, setPageNum] = useState(1);
 
@@ -22,27 +21,41 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search movies is here"
-        onChange={(e) => setSearchMovies(e.target.value)}
-      />
-      <button type="submit" onClick={() => handleSearchMovies(searchMovies)}>
-        Go
-      </button>
-      <p>Movies List</p>
-      {!searchMovies && searchMovies.length === 0 ? (
-        <List movies={movies.results} />
-      ) : searchMoviesArr.results && searchMoviesArr.results.length > 0 ? (
-        <List movies={searchMoviesArr.results} />
-      ) : (
-        "no movies"
-      )}
-      <p onClick={pageNum < last_page ? () => handleClick(pageNum) : ""}>
-        {pageNum < last_page ? "Load more.." : ""}
-      </p>
-    </div>
+    <>
+      <header className="py-3 header">
+        <div className="container-xl header-search-bar">
+          <input
+            className="form-control input-control"
+            type="text"
+            placeholder="Search movies is here"
+            onChange={(e) => setSearchMovies(e.target.value)}
+          />
+          <button
+            className="search-btn btn"
+            type="submit"
+            onClick={() => handleSearchMovies(searchMovies)}
+          >
+            Go
+          </button>
+        </div>
+      </header>
+      <section className="main-movie-section">
+        <>
+          {!searchMovies && searchMovies.length === 0 ? (
+            <List movies={movies.results} />
+          ) : searchMoviesArr.results && searchMoviesArr.results.length > 0 ? (
+            <List movies={searchMoviesArr.results} />
+          ) : (
+            "no movies"
+          )}
+        </>
+        <div className="text-center py-4 text-white load-more">
+          <p onClick={() => handleClick(pageNum)}>
+            {pageNum < last_page ? "Load more..." : ""}
+          </p>
+        </div>
+      </section>
+    </>
   );
 }
 
