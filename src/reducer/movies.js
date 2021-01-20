@@ -3,7 +3,6 @@ import { GET_MORE_MOVIES, GET_MOVIES, SEARCH_Movies } from "../action/types";
 
 const initialState = {
     searchMoviesArr: [],
-    page: 1,
     movies: []
 }
 

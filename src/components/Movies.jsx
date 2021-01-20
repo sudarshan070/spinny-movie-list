@@ -3,13 +3,17 @@ import { Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getMoreMovies, getMovies, getSearchMovies } from "../action";
 import List from "./List";
+import SkeletonElement from "./skeletons/Skeletonelement";
+import SkeletonMovies from "./skeletons/SkeletonMovies";
 
 function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
   const [searchMovies, setSearchMovies] = useState("");
   const [pageNum, setPageNum] = useState(1);
 
   useEffect(() => {
-    dispatch(getMovies(page));
+    setTimeout(() => {
+      dispatch(getMovies(page));
+    }, 1000);
   }, [dispatch, page]);
 
   const handleSearchMovies = (searchMovies) => {
@@ -41,6 +45,7 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
         </div>
       </header>
       <section className="main-movie-section">
+        {/* <SkeletonMovies /> */}
         <>
           {!searchMovies && searchMovies.length === 0 ? (
             <List movies={movies.results} />
@@ -49,6 +54,18 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
           ) : (
             <div className="loading">
               <Spinner animation="grow" />
+            </div>
+          )}
+          {movies.length === 0 && (
+            <div className="container-xl">
+              <div className="d-flex flex-wrap justify-content-between">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((e) => (
+                  <SkeletonMovies key={e} />
+                ))}
+              </div>
+              <div className="d-flex justify-content-center pt-4 ">
+                <SkeletonElement type="load" />
+              </div>
             </div>
           )}
         </>
