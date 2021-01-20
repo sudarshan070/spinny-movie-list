@@ -83,3 +83,20 @@ input::placeholder {
   display: grid;
   place-items: center;
 }
+
+.error {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .error-card {
+    color: red;
+    letter-spacing: 0.15rem;
+    font-size: 1.8rem;
+    display: grid;
+    place-items: center;
+    background: #ffffff5e;
+    width: 35%;
+    height: 30%;
+  }
+}

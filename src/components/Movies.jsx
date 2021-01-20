@@ -6,7 +6,7 @@ import List from "./List";
 import SkeletonElement from "./skeletons/Skeletonelement";
 import SkeletonMovies from "./skeletons/SkeletonMovies";
 
-function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
+function Movies({ dispatch, movies, searchMoviesArr, page, last_page, error }) {
   const [searchMovies, setSearchMovies] = useState("");
   const [pageNum, setPageNum] = useState(1);
 
@@ -56,18 +56,25 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page }) {
               <Spinner animation="grow" />
             </div>
           )}
-          {movies.length === 0 && (
-            <div className="container-xl">
-              <div className="d-flex flex-wrap justify-content-between">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((e) => (
-                  <SkeletonMovies key={e} />
-                ))}
-              </div>
-              <div className="d-flex justify-content-center pt-4 ">
-                <SkeletonElement type="load" />
-              </div>
+          {/* {error && error} */}
+
+          {(error && (
+            <div className="error">
+              <div className="error-card rounded shadow-lg">{error}</div>
             </div>
-          )}
+          )) ||
+            (movies.length === 0 && (
+              <div className="container-xl">
+                <div className="d-flex flex-wrap justify-content-between">
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((e) => (
+                    <SkeletonMovies key={e} />
+                  ))}
+                </div>
+                <div className="d-flex justify-content-center pt-4 ">
+                  <SkeletonElement type="load" />
+                </div>
+              </div>
+            ))}
         </>
         <div className="text-center py-4 text-white load-more">
           <p onClick={() => handleClick(pageNum)}>
@@ -85,6 +92,7 @@ function mapStateToProps(state) {
     searchMoviesArr: state.movies.searchMoviesArr,
     page: state.movies.page,
     last_page: state.movies.movies.last_page,
+    error: state.error,
   };
 }
 

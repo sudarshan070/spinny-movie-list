@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { BASE_URL } from '../utils/api';
-import { GET_FAILURE, GET_MORE_MOVIES, GET_MOVIES, SEARCH_Movies, SET_LOADING } from './types';
+import { ERROR_RESET, GET_FAILURE, GET_MORE_MOVIES, GET_MOVIES, SEARCH_Movies, SET_LOADING } from './types';
 
 
 export function setLoading(loading) {
@@ -15,17 +15,28 @@ export function getFailure() {
         type: GET_FAILURE
     }
 }
+export function setError(error) {
+    return {
+        type: "",
+        error
+    }
+}
 
 export function getMovies() {
     return async function (dispatch) {
         try {
-            const getMoviesData = await axios.get(`${BASE_URL}q=<query>&limit=16&page=1`)
+            const getMoviesData = await axios.get(`${BASE_URL}/dkf`)
+            console.log(getMoviesData, 'getMoviesData');
             await dispatch({
                 type: GET_MOVIES,
                 payload: getMoviesData.data
             })
+            await dispatch({
+                type: ERROR_RESET,
+            })
         } catch (error) {
-            dispatch(getFailure())
+            console.log(error, 'error')
+            dispatch(setError("Failed to fetch data from API."))
         }
     }
 }
