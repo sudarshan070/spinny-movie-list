@@ -25,8 +25,7 @@ export function setError(error) {
 export function getMovies() {
     return async function (dispatch) {
         try {
-            const getMoviesData = await axios.get(`${BASE_URL}/dkf`)
-            console.log(getMoviesData, 'getMoviesData');
+            const getMoviesData = await axios.get(`${BASE_URL}q=<query>&limit=16&page=1`)
             await dispatch({
                 type: GET_MOVIES,
                 payload: getMoviesData.data
@@ -35,7 +34,6 @@ export function getMovies() {
                 type: ERROR_RESET,
             })
         } catch (error) {
-            console.log(error, 'error')
             dispatch(setError("Failed to fetch data from API."))
         }
     }
@@ -52,7 +50,7 @@ export function getSearchMovies(search) {
             })
 
         } catch (error) {
-            dispatch(getFailure())
+            dispatch(setError('You not search now'))
         }
     }
 }
@@ -60,13 +58,13 @@ export function getSearchMovies(search) {
 export function getMoreMovies(page) {
     return async function (dispatch) {
         try {
-            const getMoreMoviesData = await axios.get(`${BASE_URL}q=<query>&limit=16&page=${page}`)
+            const getMoreMoviesData = await axios.get(`${BASE_URL}q=<query>&limit=16&page=1`)
             await dispatch({
                 type: GET_MORE_MOVIES,
                 payload: getMoreMoviesData.data
             })
         } catch (error) {
-            dispatch(getFailure())
+            dispatch(setError("You not more fetch data from API."))
         }
     }
 }

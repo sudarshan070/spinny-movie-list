@@ -47,7 +47,9 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page, error }) {
       <section className="main-movie-section">
         {/* <SkeletonMovies /> */}
         <>
-          {!searchMovies && searchMovies.length === 0 ? (
+          {error ? (
+            ""
+          ) : !searchMovies && searchMovies.length === 0 ? (
             <List movies={movies.results} />
           ) : searchMoviesArr.results && searchMoviesArr.results.length > 0 ? (
             <List movies={searchMoviesArr.results} />
@@ -76,11 +78,15 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page, error }) {
               </div>
             ))}
         </>
-        <div className="text-center py-4 text-white load-more">
-          <p onClick={() => handleClick(pageNum)}>
-            {pageNum < last_page ? "Load more..." : ""}
-          </p>
-        </div>
+        {error ? (
+          ""
+        ) : (
+          <div className="text-center py-4 text-white load-more">
+            <p onClick={() => handleClick(pageNum)}>
+              {pageNum < last_page ? "Load more..." : ""}
+            </p>
+          </div>
+        )}
       </section>
     </>
   );
