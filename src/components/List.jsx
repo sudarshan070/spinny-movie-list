@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function List({ movies }) {
-  // console.log(movies, "movies is here");
   return (
     <div className="container-xl d-flex justify-content-between flex-wrap m-movie-container">
       {movies &&

@@ -55,7 +55,6 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page, error }) {
         </div>
       </header>
       <section className="main-movie-section">
-        {/* <SkeletonMovies /> */}
         <>
           {error ? (
             ""
@@ -68,7 +67,7 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page, error }) {
               <Spinner animation="grow" />
             </div>
           )}
-          
+
           {(error && (
             <div className="error">
               <div className="error-card rounded shadow-lg">{error}</div>
@@ -102,7 +101,6 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page, error }) {
             )}
           </div>
         )}
-        {/* <button onClick={() => handleClickSearchMovies(pageNum)}>Search</button> */}
       </section>
     </>
   );
