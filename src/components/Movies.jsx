@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
-import { getMoreMovies, getMovies, getSearchMovies } from "../action";
+import {
+  getMoreMovies,
+  getMoreSearchMovies,
+  getMovies,
+  getSearchMovies,
+} from "../action";
 import List from "./List";
 import SkeletonElement from "./skeletons/Skeletonelement";
 import SkeletonMovies from "./skeletons/SkeletonMovies";
@@ -23,6 +28,11 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page, error }) {
   const handleClick = (page) => {
     setPageNum(page + 1);
     dispatch(getMoreMovies(page + 1));
+  };
+
+  const handleClickSearchMovies = (page) => {
+    setPageNum(page + 1);
+    dispatch(getMoreSearchMovies(page + 1));
   };
 
   return (
@@ -58,8 +68,7 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page, error }) {
               <Spinner animation="grow" />
             </div>
           )}
-          {/* {error && error} */}
-
+          
           {(error && (
             <div className="error">
               <div className="error-card rounded shadow-lg">{error}</div>
@@ -82,11 +91,18 @@ function Movies({ dispatch, movies, searchMoviesArr, page, last_page, error }) {
           ""
         ) : (
           <div className="text-center py-4 text-white load-more">
-            <p onClick={() => handleClick(pageNum)}>
-              {pageNum < last_page ? "Load more..." : ""}
-            </p>
+            {!searchMovies && searchMovies.length === 0 ? (
+              <p onClick={() => handleClick(pageNum)}>
+                {pageNum < last_page ? "Load more..." : ""}
+              </p>
+            ) : (
+              <p onClick={() => handleClickSearchMovies(pageNum)}>
+                {pageNum < last_page ? "Load more..." : ""}
+              </p>
+            )}
           </div>
         )}
+        {/* <button onClick={() => handleClickSearchMovies(pageNum)}>Search</button> */}
       </section>
     </>
   );

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { BASE_URL } from '../utils/api';
-import { ERROR_RESET, GET_FAILURE, GET_MORE_MOVIES, GET_MOVIES, SEARCH_Movies, SET_LOADING } from './types';
+import { ERROR_RESET, GET_FAILURE, GET_MORE_MOVIES, GET_MORE_SEARCH_MOVIES, GET_MOVIES, SEARCH_Movies, SET_LOADING } from './types';
 
 
 export function setLoading(loading) {
@@ -43,14 +43,26 @@ export function getSearchMovies(search) {
     return async function (dispatch) {
         try {
             const searchMoviesData = await axios.get(`${BASE_URL}q=${search}`)
-            console.log(searchMoviesData, 'searchMoviesData');
             await dispatch({
                 type: SEARCH_Movies,
                 payload: searchMoviesData.data
             })
-
         } catch (error) {
             dispatch(setError('You not search now'))
+        }
+    }
+}
+
+export function getMoreSearchMovies(page) {
+    return async function (dispatch) {
+        try {
+            const moreSearchMovies = await axios.get(`${BASE_URL}q=<query>&page=${page}`)
+            await dispatch({
+                type: GET_MORE_SEARCH_MOVIES,
+                payload: moreSearchMovies.data
+            })
+        } catch (error) {
+            console.log(error)
         }
     }
 }
@@ -58,7 +70,7 @@ export function getSearchMovies(search) {
 export function getMoreMovies(page) {
     return async function (dispatch) {
         try {
-            const getMoreMoviesData = await axios.get(`${BASE_URL}q=<query>&limit=16&page=1`)
+            const getMoreMoviesData = await axios.get(`${BASE_URL}q=<query>&limit=16&page=${page}`)
             await dispatch({
                 type: GET_MORE_MOVIES,
                 payload: getMoreMoviesData.data

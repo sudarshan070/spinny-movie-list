@@ -4,3 +4,4 @@ export const GET_MORE_MOVIES = "GET_MORE_MOVIES"
 export const SET_LOADING = "SET_LOADING"
 export const GET_FAILURE = "GET_FAILURE"
 export const ERROR_RESET = "ERROR_RESET";
+export const GET_MORE_SEARCH_MOVIES = "GET_MORE_SEARCH_MOVIES" 
